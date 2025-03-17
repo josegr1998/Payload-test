@@ -1,4 +1,4 @@
-import { FeatureBoxHero as FeatureBoxHeroType, Media } from '@/payload-types'
+import { FeatureBoxHero as FeatureBoxHeroType } from '@/payload-types'
 import React from 'react'
 import Image from 'next/image'
 import { isValidImage } from '@/utils/isValidImage'

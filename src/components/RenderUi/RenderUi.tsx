@@ -1,5 +1,5 @@
 import { Page } from '@/payload-types'
-import React, { JSX } from 'react'
+import React from 'react'
 import { FeatureBoxHero } from '../FeatureBoxHero/FeatureBoxHero'
 import { Jumbotron } from '../Jumbotron/Jumbotron'
 import { UiComponent } from '@/types/common/Component'
