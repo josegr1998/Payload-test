@@ -11,7 +11,12 @@ export const Jumbotron = ({ title, description, image }: Props) => {
     <section className="relative flex items-center justify-center w-full h-[400px] bg-gray-900 text-white">
       {/* Background Image */}
       {isValidImage(image) && (
-        <Image src={image.url} alt={image.alt} fill className="object-cover" />
+        <Image
+          src={`https://payload-test-pearl.vercel.app/${image.url}`}
+          alt={image.alt}
+          fill
+          className="object-cover"
+        />
       )}
 
       {/* Overlay */}
