@@ -8,12 +8,12 @@ import config from '@/payload.config'
 import { RenderUi } from '@/components/RenderUi/RenderUi'
 import { Header } from '@/components/Header/Header'
 
-const getPage = async ({ payload }: { payload: BasePayload }) => {
+const getPage = async ({ payload, pagePath }: { payload: BasePayload; pagePath: string }) => {
   const result = await payload.find({
     collection: 'pages',
     where: {
       path: {
-        equals: '/',
+        equals: pagePath,
       },
     },
   })
@@ -30,12 +30,13 @@ const getHeader = async ({ payload }: { payload: BasePayload }) => {
   return result
 }
 
-export default async function HomePage() {
-  const headers = await getHeaders()
+export default async function Page({ params }: { params: { path: string[] } }) {
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
 
-  const page = await getPage({ payload })
+  const pagePath = `/${params.path.join('/')}`
+
+  const page = await getPage({ payload, pagePath })
 
   const header = await getHeader({ payload })
 

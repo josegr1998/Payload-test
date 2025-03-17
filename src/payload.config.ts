@@ -9,6 +9,11 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { Page } from './collections/Page'
+import { FeatureBoxHero } from './collections/FeatureBoxHero'
+import { Jumbotron } from './collections/Jumbotron'
+import Link from './collections/Link'
+import { Header } from './collections/Header'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -20,7 +25,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media],
+  collections: [Users, Media, Page, FeatureBoxHero, Jumbotron, Link, Header],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
