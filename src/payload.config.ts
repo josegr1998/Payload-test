@@ -37,6 +37,10 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI || '',
     },
   }),
+  cors: {
+    origins: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''],
+  },
+  csrf: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   sharp,
   plugins: [
     payloadCloudPlugin(),
