@@ -31,6 +31,9 @@ export const Link: CollectionConfig = {
       defaultValue: 'internal',
     },
   ],
+  access: {
+    read: () => true,
+  },
 }
 
 export default Link

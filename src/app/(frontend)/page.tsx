@@ -20,13 +20,16 @@ const getPage = async ({ payload }: { payload: BasePayload }) => {
 }
 
 const getHeader = async ({ payload }: { payload: BasePayload }) => {
-  const result = await payload.findByID({
-    collection: 'header',
-    id: '1',
-    draft: true,
-  })
+  const result = await fetch(
+    `${process.env.BASE_URL}/api/header/1?depth=3&draft=false&locale=undefined`,
+    {
+      cache: 'no-store',
+    },
+  )
 
-  return result
+  const data = await result.json()
+
+  return data
 }
 
 export default async function HomePage() {
