@@ -15,6 +15,9 @@ const nextConfig = {
       },
     ],
   },
+  cacheHandler: {
+    revalidate: 0,
+  },
 }
 
 export default withPayload(nextConfig, { devBundleServerPackages: false })
