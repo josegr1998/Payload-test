@@ -38,7 +38,7 @@ export default buildConfig({
     },
   }),
   cors: {
-    origins: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''],
+    origins: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   },
   csrf: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   sharp,
