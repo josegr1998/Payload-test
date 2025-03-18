@@ -17,5 +17,7 @@ export const getPage = async ({ path }: { path: string }): Promise<Page> => {
 
   const data = (await result.json()) as PaginatedDocs<Page>
 
+  console.log('what --->', data)
+
   return data.docs[0]
 }
