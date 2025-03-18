@@ -31,14 +31,6 @@ export const Link: CollectionConfig = {
       defaultValue: 'internal',
     },
   ],
-  hooks: {
-    afterChange: [
-      async ({ doc }) => {
-        console.log('revalidated path --->', '/frontend/path')
-        revalidatePath('/', 'layout')
-      },
-    ],
-  },
 }
 
 export default Link

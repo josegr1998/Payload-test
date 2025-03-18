@@ -1,3 +1,4 @@
+import { revalidatePath } from 'next/cache'
 import type { CollectionConfig } from 'payload'
 
 type PageType = 'blog' | 'standard'
@@ -57,4 +58,12 @@ export const Page: CollectionConfig = {
       required: true,
     },
   ],
+  hooks: {
+    afterChange: [
+      async ({ doc }) => {
+        console.log('revalidated path --->', '/frontend/path')
+        revalidatePath('/', 'layout')
+      },
+    ],
+  },
 }
