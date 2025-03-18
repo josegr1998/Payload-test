@@ -1,3 +1,4 @@
+import { revalidatePath } from 'next/cache'
 import type { CollectionConfig } from 'payload'
 
 export const FeatureBoxHero: CollectionConfig = {
@@ -29,4 +30,12 @@ export const FeatureBoxHero: CollectionConfig = {
       required: true,
     },
   ],
+  hooks: {
+    afterChange: [
+      async ({ doc }) => {
+        console.log('revalidated path --->', 'feature box hero')
+        revalidatePath(`/api/feature-box-hero/${doc.id}`)
+      },
+    ],
+  },
 }
