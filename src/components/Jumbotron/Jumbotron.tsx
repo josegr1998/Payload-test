@@ -12,7 +12,7 @@ export const Jumbotron = ({ title, description, image }: Props) => {
       {/* Background Image */}
       {isValidImage(image) && (
         <Image
-          src={`https://payload-test-pearl.vercel.app/${image.url}`}
+          src={`${process.env.BASE_URL}/${image.url}`}
           alt={image.alt}
           fill
           className="object-cover"

@@ -11,7 +11,7 @@ export const FeatureBoxHero = ({ title, image, description }: Props) => (
       <div className="relative w-40 h-40 md:w-56 md:h-56">
         <Image
           alt={image.alt}
-          src={`https://payload-test-pearl.vercel.app/${image.url}`}
+          src={`${process.env.BASE_URL}/${image.url}`}
           fill
           className="object-cover rounded-full shadow-md"
           unoptimized
