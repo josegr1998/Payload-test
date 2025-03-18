@@ -32,4 +32,5 @@ export const Header: CollectionConfig = {
   access: {
     read: () => true,
   },
+  auth: false,
 }

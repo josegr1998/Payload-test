@@ -33,6 +33,7 @@ export const Link: CollectionConfig = {
   access: {
     read: () => true,
   },
+  auth: false,
 }
 
 export default Link

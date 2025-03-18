@@ -32,4 +32,5 @@ export const FeatureBoxHero: CollectionConfig = {
   access: {
     read: () => true,
   },
+  auth: false,
 }

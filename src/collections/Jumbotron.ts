@@ -32,4 +32,5 @@ export const Jumbotron: CollectionConfig = {
   access: {
     read: () => true,
   },
+  auth: false,
 }

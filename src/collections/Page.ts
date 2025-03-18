@@ -60,4 +60,5 @@ export const Page: CollectionConfig = {
   access: {
     read: () => true,
   },
+  auth: false,
 }
