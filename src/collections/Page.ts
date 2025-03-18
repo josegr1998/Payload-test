@@ -22,6 +22,15 @@ export const Page: CollectionConfig = {
   slug: 'pages',
   admin: {
     useAsTitle: 'title',
+    preview: ({ path, collection }) => {
+      const encodedParams = new URLSearchParams({
+        path: path as string,
+        collection: collection as string,
+        previewSecret: process.env.PREVIEW_SECRET || '',
+      })
+
+      return `/preview?${encodedParams.toString()}`
+    },
   },
   fields: [
     {
@@ -60,5 +69,7 @@ export const Page: CollectionConfig = {
   access: {
     read: () => true,
   },
-  auth: false,
+  versions: {
+    drafts: true,
+  },
 }

@@ -14,4 +14,7 @@ export const Media: CollectionConfig = {
   ],
   upload: true,
   auth: false,
+  versions: {
+    drafts: true,
+  },
 }

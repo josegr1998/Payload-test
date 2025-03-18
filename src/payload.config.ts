@@ -25,6 +25,10 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    livePreview: {
+      url: process.env.PAYLOAD_PUBLIC_SERVER_URL || '',
+      collections: ['pages', 'feature-box-hero', 'jumbotron', 'header', 'link', 'media'],
+    },
   },
   collections: [Users, Media, Page, FeatureBoxHero, Jumbotron, Link, Header],
   editor: lexicalEditor(),

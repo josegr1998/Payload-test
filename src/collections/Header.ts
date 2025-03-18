@@ -33,4 +33,7 @@ export const Header: CollectionConfig = {
     read: () => true,
   },
   auth: false,
+  versions: {
+    drafts: true,
+  },
 }

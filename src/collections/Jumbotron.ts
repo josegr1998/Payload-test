@@ -33,4 +33,7 @@ export const Jumbotron: CollectionConfig = {
     read: () => true,
   },
   auth: false,
+  versions: {
+    drafts: true,
+  },
 }
