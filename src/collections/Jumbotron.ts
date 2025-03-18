@@ -29,4 +29,7 @@ export const Jumbotron: CollectionConfig = {
       required: true,
     },
   ],
+  access: {
+    read: () => true,
+  },
 }
