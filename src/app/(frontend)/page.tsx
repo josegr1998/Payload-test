@@ -13,6 +13,7 @@ const getPage = async ({ payload }: { payload: BasePayload }) => {
         equals: '/',
       },
     },
+    draft: true,
   })
 
   return result.docs[0]
@@ -22,6 +23,7 @@ const getHeader = async ({ payload }: { payload: BasePayload }) => {
   const result = await payload.findByID({
     collection: 'header',
     id: '1',
+    draft: true,
   })
 
   return result
