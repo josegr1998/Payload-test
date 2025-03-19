@@ -1,15 +1,20 @@
 import React from 'react'
 
 import { RenderUi } from '@/components/RenderUi/RenderUi'
-import { PageProps } from '.next/types/app/(frontend)/layout'
 import { getPage } from '@/network/getPage'
-import { draftMode } from 'next/headers'
-export default async function Page({ params }: PageProps) {
-  const searchParams = await params
 
-  const { isEnabled: isDraftMode } = await draftMode()
+export default async function Page({
+  params: paramsPromise,
+  searchParams,
+}: {
+  params: Promise<{ path: string[] }>
+  searchParams: { isDraftMode?: string }
+}) {
+  const params = await paramsPromise
 
-  const pagePath = `/${searchParams?.path.join('/')}`
+  const pagePath = `/${params?.path.join('/')}`
+
+  const isDraftMode = searchParams.isDraftMode === 'true'
 
   const page = await getPage({ path: pagePath, isDraftMode })
 

@@ -7,8 +7,12 @@ import { draftMode } from 'next/headers'
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
-export default async function HomePage() {
-  const { isEnabled: isDraftMode } = await draftMode()
+export default async function HomePage({
+  searchParams,
+}: {
+  searchParams: { isDraftMode?: string }
+}) {
+  const isDraftMode = searchParams.isDraftMode === 'true'
 
   const page = await getPage({ path: '/', isDraftMode })
 
