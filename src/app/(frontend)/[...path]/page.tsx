@@ -15,6 +15,7 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <div className="home">
+      <h2>{page.title}</h2>
       <RenderUi components={page.components} />
     </div>
   )

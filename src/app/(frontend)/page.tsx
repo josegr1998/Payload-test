@@ -14,6 +14,7 @@ export default async function HomePage() {
 
   return (
     <div className="home">
+      <h2>{page.title}</h2>
       <RenderUi components={page.components} />
     </div>
   )
