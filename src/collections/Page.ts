@@ -1,4 +1,6 @@
 import type { CollectionConfig } from 'payload'
+import CryptoJS from 'crypto-js'
+import base64url from 'base64url'
 
 type PageType = 'blog' | 'standard'
 
@@ -23,7 +25,14 @@ export const Page: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     preview: ({ path }) => {
-      return `${process.env.BASE_URL}/${path}?isDraftMode=true`
+      const encryptedToken = CryptoJS.AES.encrypt(
+        JSON.stringify({ draftModeKey: process.env.DRAFT_MODE_KEY }),
+        process.env.DRAFT_MODE_SECRET as string,
+      ).toString()
+
+      const safeToken = base64url.fromBase64(encryptedToken)
+
+      return `/preview?draftModeToken=${safeToken}&path=${path}`
     },
   },
   fields: [

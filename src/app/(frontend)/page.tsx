@@ -2,7 +2,7 @@ import React from 'react'
 
 import { RenderUi } from '@/components/RenderUi/RenderUi'
 import { getPage } from '@/network/getPage'
-import { draftMode } from 'next/headers'
+import { isValidDraftModeToken } from '@/utils/isValidDraftModeToken'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
@@ -10,11 +10,19 @@ export const revalidate = 0
 export default async function HomePage({
   searchParams,
 }: {
-  searchParams: { isDraftMode?: string }
+  searchParams: Promise<{ isDraftMode?: string; draftModeToken: string }>
 }) {
-  const isDraftMode = searchParams.isDraftMode === 'true'
+  const { isDraftMode, draftModeToken } = await searchParams
 
-  const page = await getPage({ path: '/', isDraftMode })
+  if (isDraftMode && !draftModeToken) {
+    return <div>Draft Mode Token is required</div>
+  }
+
+  if (isDraftMode && !isValidDraftModeToken(draftModeToken)) {
+    return <div>Invalid Draft Mode Token</div>
+  }
+
+  const page = await getPage({ path: '/', isDraftMode: isDraftMode === 'true' })
 
   return (
     <div className="home">
