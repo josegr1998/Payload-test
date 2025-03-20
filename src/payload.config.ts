@@ -15,7 +15,7 @@ import { Jumbotron } from './collections/Jumbotron'
 import Link from './collections/Link'
 import { Header } from './collections/Header'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
-
+import { BlogListing } from './collections/BlogListing'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -30,7 +30,7 @@ export default buildConfig({
       collections: ['pages', 'feature-box-hero', 'jumbotron', 'header', 'link', 'media'],
     },
   },
-  collections: [Users, Media, Page, FeatureBoxHero, Jumbotron, Link, Header],
+  collections: [Users, Media, Page, FeatureBoxHero, Jumbotron, Link, Header, BlogListing],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

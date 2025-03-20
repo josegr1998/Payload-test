@@ -3,9 +3,43 @@ import React from 'react'
 import { RenderUi } from '@/components/RenderUi/RenderUi'
 import { getPage } from '@/network/getPage'
 import { isValidDraftModeToken } from '@/utils/isValidDraftModeToken'
-
+import { isValidImage } from '@/utils/isValidImage'
+import { Metadata } from 'next'
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
+
+export async function generateMetadata({
+  searchParams: searchParamsPromise,
+}: {
+  searchParams: Promise<{ isDraftMode?: string; draftModeToken: string }>
+}): Promise<Metadata> {
+  const searchParams = await searchParamsPromise
+
+  if (searchParams?.isDraftMode && !searchParams?.draftModeToken) {
+    return {
+      title: 'Needs  Token',
+    }
+  }
+
+  if (searchParams?.isDraftMode && !isValidDraftModeToken(searchParams?.draftModeToken)) {
+    return {
+      title: 'Invalid Token',
+    }
+  }
+
+  const page = await getPage({ path: '/', isDraftMode: searchParams?.isDraftMode === 'true' })
+
+  const image = isValidImage(page?.meta?.image) ? page?.meta?.image?.url : '/image/default.png'
+
+  return {
+    title: page?.meta?.title,
+    openGraph: {
+      images: [image],
+    },
+    description: page?.meta?.description,
+    keywords: page?.meta?.keywords,
+  }
+}
 
 export default async function HomePage({
   searchParams,

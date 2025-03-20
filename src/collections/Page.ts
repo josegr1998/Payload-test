@@ -54,9 +54,40 @@ export const Page: CollectionConfig = {
       },
     },
     {
+      name: 'meta',
+      type: 'group',
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          label: 'Meta Title',
+          required: true,
+        },
+        {
+          name: 'description',
+          type: 'textarea',
+          label: 'Meta Description',
+          required: true,
+        },
+        {
+          name: 'keywords',
+          type: 'text',
+          label: 'Meta Keywords',
+          required: true,
+        },
+        {
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'Meta Image',
+          required: true,
+        },
+      ],
+    },
+    {
       name: 'components',
       type: 'relationship',
-      relationTo: ['feature-box-hero', 'jumbotron'],
+      relationTo: ['feature-box-hero', 'jumbotron', 'blog-listings'],
       hasMany: true,
     },
     {

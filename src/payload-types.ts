@@ -73,6 +73,7 @@ export interface Config {
     jumbotron: Jumbotron;
     links: Link;
     header: Header;
+    'blog-listings': BlogListing;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -86,6 +87,7 @@ export interface Config {
     jumbotron: JumbotronSelect<false> | JumbotronSelect<true>;
     links: LinksSelect<false> | LinksSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
+    'blog-listings': BlogListingsSelect<false> | BlogListingsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -167,6 +169,12 @@ export interface Page {
   id: number;
   title: string;
   path: string;
+  meta: {
+    title: string;
+    description: string;
+    keywords: string;
+    image: number | Media;
+  };
   components?:
     | (
         | {
@@ -176,6 +184,10 @@ export interface Page {
         | {
             relationTo: 'jumbotron';
             value: number | Jumbotron;
+          }
+        | {
+            relationTo: 'blog-listings';
+            value: number | BlogListing;
           }
       )[]
     | null;
@@ -208,6 +220,17 @@ export interface Jumbotron {
   title: string;
   image: number | Media;
   description: string;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-listings".
+ */
+export interface BlogListing {
+  id: number;
+  title: string;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -278,6 +301,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'header';
         value: number | Header;
+      } | null)
+    | ({
+        relationTo: 'blog-listings';
+        value: number | BlogListing;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -362,6 +389,14 @@ export interface MediaSelect<T extends boolean = true> {
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
   path?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        keywords?: T;
+        image?: T;
+      };
   components?: T;
   type?: T;
   updatedAt?: T;
@@ -420,6 +455,16 @@ export interface HeaderSelect<T extends boolean = true> {
         navLink?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-listings_select".
+ */
+export interface BlogListingsSelect<T extends boolean = true> {
+  title?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
