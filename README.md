@@ -10,4 +10,5 @@ blank
 # Payload-test
 
 TODO:
-[ ] - Investigate payload cache
+[ DONE ] - Investigate payload cache
+[ ] - Play with Raw HTML

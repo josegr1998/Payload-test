@@ -1,5 +1,4 @@
-import type { FeatureBoxHero, Jumbotron, BlogListing } from '@/payload-types'
-import type { ComponentType as ReactComponentType } from 'react'
+import type { FeatureBoxHero, Jumbotron, BlogListing, RichTextContent } from '@/payload-types'
 
 export type ComponentType = 'feature-box-hero' | 'jumbotron' | 'blog-listings'
 
@@ -9,6 +8,8 @@ export type Component<T extends ComponentType = ComponentType> = T extends 'feat
     ? Jumbotron
     : T extends 'blog-listings'
       ? BlogListing
-      : never
+      : T extends 'rich-text-content'
+        ? RichTextContent
+        : never
 
 export type UiComponent = Component

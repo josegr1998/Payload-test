@@ -87,7 +87,7 @@ export const Page: CollectionConfig = {
     {
       name: 'components',
       type: 'relationship',
-      relationTo: ['feature-box-hero', 'jumbotron', 'blog-listings'],
+      relationTo: ['feature-box-hero', 'jumbotron', 'blog-listings', 'rich-text-content'],
       hasMany: true,
     },
     {

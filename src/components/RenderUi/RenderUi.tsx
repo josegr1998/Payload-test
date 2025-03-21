@@ -4,18 +4,19 @@ import { FeatureBoxHero } from '../FeatureBoxHero/FeatureBoxHero'
 import { Jumbotron } from '../Jumbotron/Jumbotron'
 import { UiComponent } from '@/types/common/Component'
 import { BlogListing } from '../BlogListing/BlogListing'
-
+import { RichTextContent } from '../RichTextContent/RichTextContent'
 type Props = {
   components: Page['components']
 }
 
-type ComponentType = 'feature-box-hero' | 'jumbotron' | 'blog-listings'
+type ComponentType = 'feature-box-hero' | 'jumbotron' | 'blog-listings' | 'rich-text-content'
 
 //TODO: Fix these types
 const COMPONENT_MAP = {
   'feature-box-hero': FeatureBoxHero as unknown as UiComponent,
   jumbotron: Jumbotron as unknown as UiComponent,
   'blog-listings': BlogListing as unknown as UiComponent,
+  'rich-text-content': RichTextContent as unknown as UiComponent,
 } as const satisfies Record<ComponentType, UiComponent>
 
 const isValidComponent = (component: UiComponent | number): component is UiComponent =>
@@ -27,7 +28,7 @@ export const RenderUi = ({ components }: Props) => {
       {components?.map((component, index) => {
         const Component = COMPONENT_MAP[component.relationTo]
 
-        if (!Component || !isValidComponent(component.value)) {
+        if (!Component || !isValidComponent(component.value as UiComponent)) {
           return null
         }
 

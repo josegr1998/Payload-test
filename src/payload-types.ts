@@ -74,6 +74,7 @@ export interface Config {
     links: Link;
     header: Header;
     'blog-listings': BlogListing;
+    'rich-text-content': RichTextContent;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -88,6 +89,7 @@ export interface Config {
     links: LinksSelect<false> | LinksSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
     'blog-listings': BlogListingsSelect<false> | BlogListingsSelect<true>;
+    'rich-text-content': RichTextContentSelect<false> | RichTextContentSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -189,6 +191,10 @@ export interface Page {
             relationTo: 'blog-listings';
             value: number | BlogListing;
           }
+        | {
+            relationTo: 'rich-text-content';
+            value: number | RichTextContent;
+          }
       )[]
     | null;
   type: 'blog' | 'standard';
@@ -231,6 +237,32 @@ export interface Jumbotron {
 export interface BlogListing {
   id: number;
   title: string;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "rich-text-content".
+ */
+export interface RichTextContent {
+  id: number;
+  name: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -305,6 +337,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'blog-listings';
         value: number | BlogListing;
+      } | null)
+    | ({
+        relationTo: 'rich-text-content';
+        value: number | RichTextContent;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -465,6 +501,17 @@ export interface HeaderSelect<T extends boolean = true> {
  */
 export interface BlogListingsSelect<T extends boolean = true> {
   title?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "rich-text-content_select".
+ */
+export interface RichTextContentSelect<T extends boolean = true> {
+  name?: T;
+  content?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
