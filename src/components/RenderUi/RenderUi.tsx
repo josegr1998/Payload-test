@@ -38,10 +38,11 @@ export const RenderUi = ({ components }: Props) => {
       {components?.map((component, index) => {
         const Component = COMPONENT_MAP[component.blockType]
 
+        //@ts-expect-error TODO: Fix this type
         if (!Component || !isValidComponent(component)) {
           return null
         }
-
+        //@ts-expect-error TODO: Fix this type
         return <Component key={`${component.id}_${index}`} {...component} />
       })}
     </div>
