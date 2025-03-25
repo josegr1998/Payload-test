@@ -1,7 +1,8 @@
 import React from 'react'
-import { BlogListing as BlogListingType } from '@/payload-types'
+import { BlogListings as BlogListingType } from '@/payload-types'
 import { getBlogs } from './BlogListing.utils'
 import Image from 'next/image'
+import Link from 'next/link'
 type Props = BlogListingType
 
 export const BlogListing = async ({ title }: Props) => {
@@ -29,12 +30,12 @@ export const BlogListing = async ({ title }: Props) => {
             <div className="p-6">
               <h3 className="mb-2 text-xl font-bold text-gray-900">{blog.title}</h3>
               <p className="mb-4 text-gray-600">{blog.description}</p>
-              <a
+              <Link
                 href={blog.path}
                 className="inline-block rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-700"
               >
                 Read More
-              </a>
+              </Link>
             </div>
           </div>
         ))}

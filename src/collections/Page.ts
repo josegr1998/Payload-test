@@ -1,7 +1,12 @@
 import type { CollectionConfig } from 'payload'
 import CryptoJS from 'crypto-js'
 import base64url from 'base64url'
-
+import { ImageGallery } from '../blocks/ImageGallery'
+import { FeatureBoxHero } from '@/blocks/FeatureBoxHero'
+import { Jumbotron } from '@/blocks/Jumbotron'
+import { BlogListing } from '@/blocks/BlogListing'
+import { RichText } from '@/blocks/RichText'
+import { SuccessStories } from '@/blocks/SuccessStories'
 type PageType = 'blog' | 'standard'
 
 const validateBlogPath = (value: string) => {
@@ -84,11 +89,11 @@ export const Page: CollectionConfig = {
         },
       ],
     },
+
     {
-      name: 'components',
-      type: 'relationship',
-      relationTo: ['feature-box-hero', 'jumbotron', 'blog-listings', 'rich-text-content'],
-      hasMany: true,
+      name: 'blocks',
+      type: 'blocks',
+      blocks: [ImageGallery, FeatureBoxHero, Jumbotron, BlogListing, RichText, SuccessStories],
     },
     {
       name: 'type',

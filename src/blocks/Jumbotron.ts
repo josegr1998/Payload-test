@@ -1,10 +1,7 @@
-import type { CollectionConfig } from 'payload'
+import type { Block } from 'payload'
 
-export const Jumbotron: CollectionConfig = {
+export const Jumbotron: Block = {
   slug: 'jumbotron',
-  admin: {
-    useAsTitle: 'name',
-  },
   fields: [
     {
       name: 'name',
@@ -29,11 +26,4 @@ export const Jumbotron: CollectionConfig = {
       required: true,
     },
   ],
-  access: {
-    read: () => true,
-  },
-  auth: false,
-  versions: {
-    drafts: true,
-  },
 }

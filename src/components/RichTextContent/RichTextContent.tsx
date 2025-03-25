@@ -3,6 +3,8 @@ import {
   DefaultNodeTypes,
   SerializedLinkNode,
   SerializedHeadingNode,
+  SerializedInlineBlockNode,
+  SerializedBlockNode,
 } from '@payloadcms/richtext-lexical'
 import {
   JSXConvertersFunction,
@@ -10,8 +12,15 @@ import {
   LinkJSXConverter,
 } from '@payloadcms/richtext-lexical/react'
 import React from 'react'
+import { Jumbotron as JumbotronType } from '@/payload-types'
+import { Jumbotron } from '../Jumbotron/Jumbotron'
 
 type Props = RichTextContentType
+
+type NodeTypes =
+  | DefaultNodeTypes
+  | SerializedBlockNode<JumbotronType>
+  | SerializedInlineBlockNode<JumbotronType>
 
 const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
   const { relationTo, value } = linkNode.fields.doc!
@@ -48,6 +57,12 @@ const jsxConverters: JSXConvertersFunction<DefaultNodeTypes> = ({ defaultConvert
     }
 
     return <div>{children}</div>
+  },
+  blocks: {
+    // Each key should match your block's slug
+    jumbotron: ({ node }: { node: SerializedBlockNode<JumbotronType> }) => (
+      <Jumbotron {...node.fields} />
+    ),
   },
 })
 

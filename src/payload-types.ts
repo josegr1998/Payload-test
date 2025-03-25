@@ -64,17 +64,22 @@ export interface Config {
   auth: {
     users: UserAuthOperations;
   };
-  blocks: {};
+  blocks: {
+    'image-gallery': ImageGallery;
+    'feature-box-hero': FeatureBoxHero;
+    jumbotron: Jumbotron;
+    'blog-listings': BlogListings;
+    'rich-text-content': RichTextContent;
+    successStories: SuccessStories;
+  };
   collections: {
     users: User;
     media: Media;
     pages: Page;
-    'feature-box-hero': FeatureBoxHero;
-    jumbotron: Jumbotron;
     links: Link;
     header: Header;
-    'blog-listings': BlogListing;
-    'rich-text-content': RichTextContent;
+    footer: Footer;
+    'success-stories': SuccessStory;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -84,12 +89,10 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
-    'feature-box-hero': FeatureBoxHeroSelect<false> | FeatureBoxHeroSelect<true>;
-    jumbotron: JumbotronSelect<false> | JumbotronSelect<true>;
     links: LinksSelect<false> | LinksSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
-    'blog-listings': BlogListingsSelect<false> | BlogListingsSelect<true>;
-    'rich-text-content': RichTextContentSelect<false> | RichTextContentSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
+    'success-stories': SuccessStoriesSelect<false> | SuccessStoriesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -128,20 +131,21 @@ export interface UserAuthOperations {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
+ * via the `definition` "image-gallery".
  */
-export interface User {
-  id: number;
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  password?: string | null;
+export interface ImageGallery {
+  name: string;
+  title: string;
+  images?:
+    | {
+        image: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  description: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'image-gallery';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -165,88 +169,45 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "pages".
- */
-export interface Page {
-  id: number;
-  title: string;
-  path: string;
-  meta: {
-    title: string;
-    description: string;
-    keywords: string;
-    image: number | Media;
-  };
-  components?:
-    | (
-        | {
-            relationTo: 'feature-box-hero';
-            value: number | FeatureBoxHero;
-          }
-        | {
-            relationTo: 'jumbotron';
-            value: number | Jumbotron;
-          }
-        | {
-            relationTo: 'blog-listings';
-            value: number | BlogListing;
-          }
-        | {
-            relationTo: 'rich-text-content';
-            value: number | RichTextContent;
-          }
-      )[]
-    | null;
-  type: 'blog' | 'standard';
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "feature-box-hero".
  */
 export interface FeatureBoxHero {
-  id: number;
   name: string;
   title: string;
   image: number | Media;
   description: string;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'feature-box-hero';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "jumbotron".
  */
 export interface Jumbotron {
-  id: number;
   name: string;
   title: string;
   image: number | Media;
   description: string;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'jumbotron';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "blog-listings".
  */
-export interface BlogListing {
-  id: number;
+export interface BlogListings {
   title: string;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'blog-listings';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "rich-text-content".
  */
 export interface RichTextContent {
-  id: number;
   name: string;
   content: {
     root: {
@@ -263,6 +224,140 @@ export interface RichTextContent {
     };
     [k: string]: unknown;
   };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'rich-text-content';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "successStories".
+ */
+export interface SuccessStories {
+  title: string;
+  description?: string | null;
+  stories: (number | SuccessStory)[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'successStories';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "success-stories".
+ */
+export interface SuccessStory {
+  id: number;
+  name: string;
+  role?: string | null;
+  company?: string | null;
+  testimonial: string;
+  image?: (number | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: number;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: number;
+  title: string;
+  path: string;
+  meta: {
+    title: string;
+    description: string;
+    keywords: string;
+    image: number | Media;
+  };
+  blocks?:
+    | (
+        | {
+            name: string;
+            title: string;
+            images?:
+              | {
+                  image: number | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            description: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'image-gallery';
+          }
+        | {
+            name: string;
+            title: string;
+            image: number | Media;
+            description: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'feature-box-hero';
+          }
+        | {
+            name: string;
+            title: string;
+            image: number | Media;
+            description: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'jumbotron';
+          }
+        | {
+            title: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'blog-listings';
+          }
+        | {
+            name: string;
+            content: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'rich-text-content';
+          }
+        | {
+            title: string;
+            description?: string | null;
+            stories: (number | SuccessStory)[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'successStories';
+          }
+      )[]
+    | null;
+  type: 'blog' | 'standard';
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -301,6 +396,32 @@ export interface Header {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: number;
+  title: string;
+  logo?: (number | null) | Media;
+  footerLinks?:
+    | {
+        footerLink: number | Link;
+        id?: string | null;
+      }[]
+    | null;
+  copyrightText: string;
+  socialLinks?:
+    | {
+        platform: 'facebook' | 'twitter' | 'instagram' | 'linkedin';
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -319,14 +440,6 @@ export interface PayloadLockedDocument {
         value: number | Page;
       } | null)
     | ({
-        relationTo: 'feature-box-hero';
-        value: number | FeatureBoxHero;
-      } | null)
-    | ({
-        relationTo: 'jumbotron';
-        value: number | Jumbotron;
-      } | null)
-    | ({
         relationTo: 'links';
         value: number | Link;
       } | null)
@@ -335,12 +448,12 @@ export interface PayloadLockedDocument {
         value: number | Header;
       } | null)
     | ({
-        relationTo: 'blog-listings';
-        value: number | BlogListing;
+        relationTo: 'footer';
+        value: number | Footer;
       } | null)
     | ({
-        relationTo: 'rich-text-content';
-        value: number | RichTextContent;
+        relationTo: 'success-stories';
+        value: number | SuccessStory;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -433,34 +546,70 @@ export interface PagesSelect<T extends boolean = true> {
         keywords?: T;
         image?: T;
       };
-  components?: T;
+  blocks?:
+    | T
+    | {
+        'image-gallery'?:
+          | T
+          | {
+              name?: T;
+              title?: T;
+              images?:
+                | T
+                | {
+                    image?: T;
+                    id?: T;
+                  };
+              description?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'feature-box-hero'?:
+          | T
+          | {
+              name?: T;
+              title?: T;
+              image?: T;
+              description?: T;
+              id?: T;
+              blockName?: T;
+            };
+        jumbotron?:
+          | T
+          | {
+              name?: T;
+              title?: T;
+              image?: T;
+              description?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'blog-listings'?:
+          | T
+          | {
+              title?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'rich-text-content'?:
+          | T
+          | {
+              name?: T;
+              content?: T;
+              id?: T;
+              blockName?: T;
+            };
+        successStories?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              stories?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
   type?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "feature-box-hero_select".
- */
-export interface FeatureBoxHeroSelect<T extends boolean = true> {
-  name?: T;
-  title?: T;
-  image?: T;
-  description?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "jumbotron_select".
- */
-export interface JumbotronSelect<T extends boolean = true> {
-  name?: T;
-  title?: T;
-  image?: T;
-  description?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -497,21 +646,39 @@ export interface HeaderSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "blog-listings_select".
+ * via the `definition` "footer_select".
  */
-export interface BlogListingsSelect<T extends boolean = true> {
+export interface FooterSelect<T extends boolean = true> {
   title?: T;
+  logo?: T;
+  footerLinks?:
+    | T
+    | {
+        footerLink?: T;
+        id?: T;
+      };
+  copyrightText?: T;
+  socialLinks?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "rich-text-content_select".
+ * via the `definition` "success-stories_select".
  */
-export interface RichTextContentSelect<T extends boolean = true> {
+export interface SuccessStoriesSelect<T extends boolean = true> {
   name?: T;
-  content?: T;
+  role?: T;
+  company?: T;
+  testimonial?: T;
+  image?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;

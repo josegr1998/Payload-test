@@ -5,18 +5,28 @@ import { Jumbotron } from '../Jumbotron/Jumbotron'
 import { UiComponent } from '@/types/common/Component'
 import { BlogListing } from '../BlogListing/BlogListing'
 import { RichTextContent } from '../RichTextContent/RichTextContent'
+import { SuccessStories } from '../SuccessStories/SuccessStories'
+import { ImageGallery } from '../ImageGallery/ImageGallery'
+
 type Props = {
-  components: Page['components']
+  components: Page['blocks']
 }
 
-type ComponentType = 'feature-box-hero' | 'jumbotron' | 'blog-listings' | 'rich-text-content'
-
+type ComponentType =
+  | 'feature-box-hero'
+  | 'jumbotron'
+  | 'blog-listings'
+  | 'rich-text-content'
+  | 'image-gallery'
+  | 'successStories'
 //TODO: Fix these types
 const COMPONENT_MAP = {
   'feature-box-hero': FeatureBoxHero as unknown as UiComponent,
   jumbotron: Jumbotron as unknown as UiComponent,
   'blog-listings': BlogListing as unknown as UiComponent,
   'rich-text-content': RichTextContent as unknown as UiComponent,
+  'image-gallery': ImageGallery as unknown as UiComponent,
+  successStories: SuccessStories as unknown as UiComponent,
 } as const satisfies Record<ComponentType, UiComponent>
 
 const isValidComponent = (component: UiComponent | number): component is UiComponent =>
@@ -26,16 +36,13 @@ export const RenderUi = ({ components }: Props) => {
   return (
     <div>
       {components?.map((component, index) => {
-        const Component = COMPONENT_MAP[component.relationTo]
+        const Component = COMPONENT_MAP[component.blockType]
 
-        if (!Component || !isValidComponent(component.value as UiComponent)) {
+        if (!Component || !isValidComponent(component)) {
           return null
         }
 
-        return (
-          //@ts-expect-error -- TODO: Fix this
-          <Component key={`${component.value.id}_${index}`} {...(component.value as UiComponent)} />
-        )
+        return <Component key={`${component.id}_${index}`} {...component} />
       })}
     </div>
   )

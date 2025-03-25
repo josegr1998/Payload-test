@@ -72,8 +72,7 @@ export default async function Page({
 
   return (
     <div className="home">
-      <h2>{page.title}</h2>
-      <RenderUi components={page.components} />
+      <RenderUi components={page.blocks} />
     </div>
   )
 }

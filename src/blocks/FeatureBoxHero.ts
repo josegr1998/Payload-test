@@ -1,10 +1,8 @@
-import type { CollectionConfig } from 'payload'
+import type { Block } from 'payload'
 
-export const FeatureBoxHero: CollectionConfig = {
+export const FeatureBoxHero: Block = {
   slug: 'feature-box-hero',
-  admin: {
-    useAsTitle: 'name',
-  },
+
   fields: [
     {
       name: 'name',
@@ -29,11 +27,4 @@ export const FeatureBoxHero: CollectionConfig = {
       required: true,
     },
   ],
-  access: {
-    read: () => true,
-  },
-  auth: false,
-  versions: {
-    drafts: true,
-  },
 }

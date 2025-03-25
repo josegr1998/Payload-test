@@ -1,7 +1,7 @@
 // storage-adapter-import-placeholder
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { BlocksFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -10,13 +10,18 @@ import sharp from 'sharp'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Page } from './collections/Page'
-import { FeatureBoxHero } from './collections/FeatureBoxHero'
-import { Jumbotron } from './collections/Jumbotron'
+import { FeatureBoxHero } from './blocks/FeatureBoxHero'
+import { Jumbotron } from './blocks/Jumbotron'
 import Link from './collections/Link'
 import { Header } from './collections/Header'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
-import { BlogListing } from './collections/BlogListing'
-import { RichText } from './collections/RichTest'
+import { BlogListing } from './blocks/BlogListing'
+import { RichText } from './blocks/RichText'
+import { ImageGallery } from './blocks/ImageGallery'
+import { Footer } from './collections/Footer'
+import SuccessStory from './collections/SuccessStory'
+import { SuccessStories } from './blocks/SuccessStories'
+
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -28,11 +33,19 @@ export default buildConfig({
     },
     livePreview: {
       url: process.env.PAYLOAD_PUBLIC_SERVER_URL || '',
-      collections: ['pages', 'feature-box-hero', 'jumbotron', 'header', 'link', 'media'],
+      collections: ['pages', 'header', 'link', 'media'],
     },
   },
-  collections: [Users, Media, Page, FeatureBoxHero, Jumbotron, Link, Header, BlogListing, RichText],
-  editor: lexicalEditor(),
+  blocks: [ImageGallery, FeatureBoxHero, Jumbotron, BlogListing, RichText, SuccessStories],
+  collections: [Users, Media, Page, Link, Header, Footer, SuccessStory],
+  editor: lexicalEditor({
+    features: ({ defaultFeatures }) => [
+      ...defaultFeatures,
+      BlocksFeature({
+        blocks: [ImageGallery, FeatureBoxHero, Jumbotron, BlogListing],
+      }),
+    ],
+  }),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
