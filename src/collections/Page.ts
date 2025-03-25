@@ -7,6 +7,8 @@ import { Jumbotron } from '@/blocks/Jumbotron'
 import { BlogListing } from '@/blocks/BlogListing'
 import { RichText } from '@/blocks/RichText'
 import { SuccessStories } from '@/blocks/SuccessStories'
+import { BlogHeader } from '@/blocks/BlogHeader'
+
 type PageType = 'blog' | 'standard'
 
 const validateBlogPath = (value: string) => {
@@ -93,7 +95,15 @@ export const Page: CollectionConfig = {
     {
       name: 'blocks',
       type: 'blocks',
-      blocks: [ImageGallery, FeatureBoxHero, Jumbotron, BlogListing, RichText, SuccessStories],
+      blocks: [
+        ImageGallery,
+        FeatureBoxHero,
+        Jumbotron,
+        BlogListing,
+        RichText,
+        SuccessStories,
+        BlogHeader,
+      ],
     },
     {
       name: 'type',

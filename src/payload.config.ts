@@ -21,7 +21,7 @@ import { ImageGallery } from './blocks/ImageGallery'
 import { Footer } from './collections/Footer'
 import SuccessStory from './collections/SuccessStory'
 import { SuccessStories } from './blocks/SuccessStories'
-
+import { BlogHeader } from './blocks/BlogHeader'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -36,13 +36,21 @@ export default buildConfig({
       collections: ['pages', 'header', 'link', 'media'],
     },
   },
-  blocks: [ImageGallery, FeatureBoxHero, Jumbotron, BlogListing, RichText, SuccessStories],
+  blocks: [
+    ImageGallery,
+    FeatureBoxHero,
+    Jumbotron,
+    BlogListing,
+    RichText,
+    SuccessStories,
+    BlogHeader,
+  ],
   collections: [Users, Media, Page, Link, Header, Footer, SuccessStory],
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [
       ...defaultFeatures,
       BlocksFeature({
-        blocks: [ImageGallery, FeatureBoxHero, Jumbotron, BlogListing],
+        blocks: [ImageGallery, FeatureBoxHero, Jumbotron, BlogListing, BlogHeader],
       }),
     ],
   }),

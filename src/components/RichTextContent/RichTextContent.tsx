@@ -49,11 +49,19 @@ const jsxConverters: JSXConvertersFunction<DefaultNodeTypes> = ({ defaultConvert
     const children = nodesToJSX({ nodes: node.children })
 
     if (tag === 'h1') {
-      return <h1 className="text-2xl font-bold">{children}</h1>
+      return <h1 className="text-2xl font-bold my-2">{children}</h1>
     }
 
     if (tag === 'h2') {
-      return <h2 className="text-xl font-bold">{children}</h2>
+      return <h2 className="text-xl font-bold my-2">{children}</h2>
+    }
+
+    if (tag === 'h3') {
+      return <h3 className="text-lg font-bold my-2">{children}</h3>
+    }
+
+    if (tag === 'h4') {
+      return <h4 className="text-base font-bold my-2">{children}</h4>
     }
 
     return <div>{children}</div>
@@ -67,5 +75,5 @@ const jsxConverters: JSXConvertersFunction<DefaultNodeTypes> = ({ defaultConvert
 })
 
 export const RichTextContent = ({ content }: Props) => {
-  return <RichText data={content} converters={jsxConverters} />
+  return <RichText data={content} converters={jsxConverters} className="py-4 px-4" />
 }

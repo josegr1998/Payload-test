@@ -71,6 +71,7 @@ export interface Config {
     'blog-listings': BlogListings;
     'rich-text-content': RichTextContent;
     successStories: SuccessStories;
+    blogHeader: BlogHeader;
   };
   collections: {
     users: User;
@@ -257,6 +258,23 @@ export interface SuccessStory {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blogHeader".
+ */
+export interface BlogHeader {
+  title: string;
+  subtitle?: string | null;
+  image?: (number | null) | Media;
+  author: {
+    name: string;
+    avatar?: (number | null) | Media;
+  };
+  publishedDate: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'blogHeader';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -354,6 +372,19 @@ export interface Page {
             id?: string | null;
             blockName?: string | null;
             blockType: 'successStories';
+          }
+        | {
+            title: string;
+            subtitle?: string | null;
+            image?: (number | null) | Media;
+            author: {
+              name: string;
+              avatar?: (number | null) | Media;
+            };
+            publishedDate: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'blogHeader';
           }
       )[]
     | null;
@@ -605,6 +636,22 @@ export interface PagesSelect<T extends boolean = true> {
               title?: T;
               description?: T;
               stories?: T;
+              id?: T;
+              blockName?: T;
+            };
+        blogHeader?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              image?: T;
+              author?:
+                | T
+                | {
+                    name?: T;
+                    avatar?: T;
+                  };
+              publishedDate?: T;
               id?: T;
               blockName?: T;
             };

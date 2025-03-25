@@ -7,7 +7,7 @@ import { BlogListing } from '../BlogListing/BlogListing'
 import { RichTextContent } from '../RichTextContent/RichTextContent'
 import { SuccessStories } from '../SuccessStories/SuccessStories'
 import { ImageGallery } from '../ImageGallery/ImageGallery'
-
+import { BlogHeader } from '../BlogHeader/BlogHeader'
 type Props = {
   components: Page['blocks']
 }
@@ -19,6 +19,8 @@ type ComponentType =
   | 'rich-text-content'
   | 'image-gallery'
   | 'successStories'
+  | 'blogHeader'
+
 //TODO: Fix these types
 const COMPONENT_MAP = {
   'feature-box-hero': FeatureBoxHero as unknown as UiComponent,
@@ -27,6 +29,7 @@ const COMPONENT_MAP = {
   'rich-text-content': RichTextContent as unknown as UiComponent,
   'image-gallery': ImageGallery as unknown as UiComponent,
   successStories: SuccessStories as unknown as UiComponent,
+  blogHeader: BlogHeader as unknown as UiComponent,
 } as const satisfies Record<ComponentType, UiComponent>
 
 const isValidComponent = (component: UiComponent | number): component is UiComponent =>
